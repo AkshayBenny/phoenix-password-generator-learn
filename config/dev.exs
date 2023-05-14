@@ -1,11 +1,11 @@
 import Config
 
 # Configure your database
-config :rest, Rest.Repo,
+config :rest_api, RestApi.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
-  database: "rest_dev",
+  database: "rest_api_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
@@ -16,18 +16,15 @@ config :rest, Rest.Repo,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with esbuild to bundle .js and .css sources.
-config :rest, RestWeb.Endpoint,
+config :rest_api, RestApiWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: 4000],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "IR2Wj4+Y6yEoOyxWFjtzmQCUtVzJ9Afe20cEOPnb7RwiqNVlIhx+TGlf92uokPJ+",
-  watchers: [
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
-  ]
+  secret_key_base: "1UOn5/RVqXDjIeKRJzGsAhkmIXh+WvCw3mnD10jLqtdOsCZuQh38/cAbRMNwA4iX",
+  watchers: []
 
 # ## SSL Support
 #
@@ -52,18 +49,8 @@ config :rest, RestWeb.Endpoint,
 # configured to run both http and https servers on
 # different ports.
 
-# Watch static and templates for browser reloading.
-config :rest, RestWeb.Endpoint,
-  live_reload: [
-    patterns: [
-      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"priv/gettext/.*(po)$",
-      ~r"lib/rest_web/(controllers|live|components)/.*(ex|heex)$"
-    ]
-  ]
-
 # Enable dev routes for dashboard and mailbox
-config :rest, dev_routes: true
+config :rest_api, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
@@ -74,6 +61,3 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
-
-# Disable swoosh api client as it is only required for production adapters.
-config :swoosh, :api_client, false

@@ -5,26 +5,20 @@ import Config
 # The MIX_TEST_PARTITION environment variable can be used
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
-config :rest, Rest.Repo,
+config :rest_api, RestApi.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
-  database: "rest_test#{System.get_env("MIX_TEST_PARTITION")}",
+  database: "rest_api_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :rest, RestWeb.Endpoint,
+config :rest_api, RestApiWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "oJk3K3xGpkq+niAC+CXTKqmfdUjbuxcF+3jGVpqlDhtHXatosZLuudJchFtzeGrY",
+  secret_key_base: "G0JvqDxk/89gPp1lCzNuA21FaglJ0oMlLC1X+ikw+V3dxbRXh6UL3zZ9ru30arL1",
   server: false
-
-# In test we don't send emails.
-config :rest, Rest.Mailer, adapter: Swoosh.Adapters.Test
-
-# Disable swoosh api client as it is only required for production adapters.
-config :swoosh, :api_client, false
 
 # Print only warnings and errors during test
 config :logger, level: :warning

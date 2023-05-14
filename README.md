@@ -1,4 +1,4 @@
-# Rest
+# RestApi
 
 To start your Phoenix server:
 
