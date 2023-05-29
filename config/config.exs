@@ -7,19 +7,49 @@
 # General application configuration
 import Config
 
-config :rest_api,
-  ecto_repos: [RestApi.Repo],
-  generators: [binary_id: true]
+config :discuss,
+  ecto_repos: [Discuss.Repo]
 
 # Configures the endpoint
-config :rest_api, RestApiWeb.Endpoint,
+config :discuss, DiscussWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [
-    formats: [json: RestApiWeb.ErrorJSON],
+    formats: [html: DiscussWeb.ErrorHTML, json: DiscussWeb.ErrorJSON],
     layout: false
   ],
-  pubsub_server: RestApi.PubSub,
-  live_view: [signing_salt: "L/QNut/y"]
+  pubsub_server: Discuss.PubSub,
+  live_view: [signing_salt: "B+G5L5I4"]
+
+# Configures the mailer
+#
+# By default it uses the "Local" adapter which stores the emails
+# locally. You can see the emails in your browser, at "/dev/mailbox".
+#
+# For production it's recommended to configure a different adapter
+# at the `config/runtime.exs`.
+config :discuss, Discuss.Mailer, adapter: Swoosh.Adapters.Local
+
+# Configure esbuild (the version is required)
+config :esbuild,
+  version: "0.17.11",
+  default: [
+    args:
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
+# Configure tailwind (the version is required)
+config :tailwind,
+  version: "3.2.7",
+  default: [
+    args: ~w(
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/app.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
+  ]
 
 # Configures Elixir's Logger
 config :logger, :console,

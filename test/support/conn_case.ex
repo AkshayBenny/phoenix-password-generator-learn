@@ -1,4 +1,4 @@
-defmodule RestApiWeb.ConnCase do
+defmodule DiscussWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -11,7 +11,7 @@ defmodule RestApiWeb.ConnCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use RestApiWeb.ConnCase, async: true`, although
+  by setting `use DiscussWeb.ConnCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -20,19 +20,19 @@ defmodule RestApiWeb.ConnCase do
   using do
     quote do
       # The default endpoint for testing
-      @endpoint RestApiWeb.Endpoint
+      @endpoint DiscussWeb.Endpoint
 
-      use RestApiWeb, :verified_routes
+      use DiscussWeb, :verified_routes
 
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-      import RestApiWeb.ConnCase
+      import DiscussWeb.ConnCase
     end
   end
 
   setup tags do
-    RestApi.DataCase.setup_sandbox(tags)
+    Discuss.DataCase.setup_sandbox(tags)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 end
